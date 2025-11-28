@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renta Ya | Tu mejor hogar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="flex flex-col min-h-screen text-slate-800 bg-slate-50">
+
+    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer group" onclick="window.location.href='/'">
+                    <div class="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3 shadow-lg group-hover:rotate-6 transition">
+                        RY
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold text-slate-800 tracking-tight">Renta<span class="text-brand">Ya</span></span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-8">
+                    <div class="hidden md:flex space-x-6">
+                        <a href="/" class="text-slate-600 hover:text-brand font-medium transition">Inicio</a>
+                        <a href="#contacto" class="text-slate-600 hover:text-brand font-medium transition">Contacto</a>
+                    </div>
+                    
+                    <div id="auth-container" class="pl-4 border-l border-slate-200 flex items-center">
+                        <div class="flex items-center space-x-3">
+                            <a href="/login" class="text-slate-600 hover:text-blue-600 font-medium text-sm transition px-2">
+                                Iniciar Sesión
+                            </a>
+                            <a href="/register" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-700 shadow-md transition transform hover:scale-105">
+                                Registrarse
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer id="contacto" class="bg-slate-900 text-white pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Renta<span class="text-blue-500">Ya</span></h2>
+            <p class="text-slate-400 mb-8 max-w-md mx-auto">Conectamos personas con espacios únicos.</p>
+            <div class="flex justify-center space-x-8 mb-8">
+                <a href="https://wa.me/5493764290496" target="_blank" class="text-2xl text-slate-400 hover:text-green-500 transition" title="WhatsApp 3764290496">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="mailto:hutteroctavio18@gmail.com" target="_blank" class="text-2xl text-slate-400 hover:text-red-500 transition" title="Correo hutteroctavio18@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <p class="text-xs text-slate-600">© 2024 Renta Ya. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="contactModal" class="fixed inset-0 bg-slate-900/70 hidden z-[60] items-center justify-center p-4 backdrop-blur-sm transition-all">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-fade-in-up border border-slate-100">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">Contacto Directo</h3>
+            <p class="text-slate-500 mb-6 text-sm">El mensaje se enviará directamente a nuestro equipo.</p>
+            
+            <div class="flex items-center mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <i id="channelIcon" class="text-2xl mr-4"></i>
+                <div>
+                    <p class="font-bold text-slate-800" id="channelName">Canal</p>
+                    <p class="text-xs text-slate-500">Respuesta rápida</p>
+                </div>
+            </div>
+
+            <textarea id="messageInput" rows="4" class="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-slate-700 bg-white" placeholder="Escribe tu consulta aquí..."></textarea>
+            <button onclick="sendMessage()" id="sendBtn" class="w-full mt-6 py-3.5 rounded-xl font-bold text-white transition transform hover:scale-[1.02] shadow-lg"></button>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = "{{ supabase_url }}";
+        const supabaseKey = "{{ supabase_key }}";
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
